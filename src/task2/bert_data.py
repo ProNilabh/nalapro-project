@@ -1,11 +1,3 @@
-"""
-src/task2/bert_data.py — BERT-compatible PyTorch dataset.
-
-Tokenizes each document on-the-fly using a HuggingFace tokenizer.
-This is shared by Task 2 (vanilla fine-tuning) and Task 3 (MLM →
-classification fine-tuning).
-"""
-
 import torch
 from torch.utils.data import Dataset
 from transformers import AutoTokenizer
