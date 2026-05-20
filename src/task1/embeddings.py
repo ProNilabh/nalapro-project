@@ -1,17 +1,3 @@
-"""
-src/task1/embeddings.py — Word2Vec and TF-IDF vectorizers.
-
-Word2Vec
---------
-Trained from scratch on the corpus using Gensim's Skip-Gram.
-Document vectors are produced by averaging the word vectors of
-all words in the document that exist in the vocabulary.
-
-TF-IDF
-------
-Scikit-learn TfidfVectorizer with sublinear TF and L2 normalization.
-"""
-
 import numpy as np
 from gensim.models import Word2Vec
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -19,9 +5,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 import config
 
 
-# -----------------------------------------------------------------
 # WORD2VEC
-# -----------------------------------------------------------------
 
 def train_word2vec(tokenized_docs, epochs: int = None,
                    vector_size: int = None) -> Word2Vec:
@@ -59,9 +43,7 @@ def docs_to_matrix(tokenized_docs, w2v_model) -> np.ndarray:
     )
 
 
-# -----------------------------------------------------------------
 # TF-IDF
-# -----------------------------------------------------------------
 
 def fit_tfidf(train_strings, max_features: int = None) -> TfidfVectorizer:
     """Fit a TfidfVectorizer on training strings only."""
