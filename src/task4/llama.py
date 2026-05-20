@@ -1,16 +1,3 @@
-"""
-src/task4/llama.py — Llama-3 zero-shot and few-shot prompting.
-
-This module is intentionally flexible so it works on different setups:
-  - High-end GPU: load Meta-Llama-3-8B-Instruct in fp16
-  - Mid-range GPU (8-16 GB VRAM): load in 4-bit via bitsandbytes
-  - No GPU / Mac: swap LLAMA_MODEL in config.py for a smaller instruct
-    model (see docs/TASK4_GUIDE.md). The same pipeline works.
-
-The model is NEVER fine-tuned in this task — we only construct prompts
-and parse the model's text response into one of the 20 category names.
-"""
-
 import random
 
 import numpy as np
@@ -22,15 +9,9 @@ from transformers import AutoTokenizer, AutoModelForCausalLM
 import config
 
 
-# -----------------------------------------------------------------
 # Model loading (supports optional 4-bit quantization)
-# -----------------------------------------------------------------
 
 def load_llama():
-    """
-    Load the LLM in 4-bit (if bitsandbytes available + GPU) or fp16/fp32
-    otherwise. Returns (model, tokenizer).
-    """
     print(f"  loading {config.LLAMA_MODEL}...")
 
     quant_config = None
@@ -61,9 +42,7 @@ def load_llama():
     return model, tokenizer
 
 
-# -----------------------------------------------------------------
 # Prompt construction
-# -----------------------------------------------------------------
 
 def _category_list(target_names) -> str:
     return "\n".join(f"  - {name}" for name in target_names)
@@ -99,9 +78,7 @@ def few_shot_prompt(text: str, target_names, examples) -> str:
     )
 
 
-# -----------------------------------------------------------------
 # Response parsing
-# -----------------------------------------------------------------
 
 def parse_response(response: str, target_names) -> int:
     """
@@ -125,10 +102,7 @@ def parse_response(response: str, target_names) -> int:
     return -1   # unparseable
 
 
-# -----------------------------------------------------------------
 # Few-shot example selection
-# -----------------------------------------------------------------
-
 def pick_few_shot_examples(train_texts, train_labels, target_names, k: int):
     """
     Pick `k` (text, label_name) examples for in-context learning.
@@ -143,10 +117,7 @@ def pick_few_shot_examples(train_texts, train_labels, target_names, k: int):
     return examples[:k]
 
 
-# -----------------------------------------------------------------
 # Experiment runner
-# -----------------------------------------------------------------
-
 def run_llama_experiment(model, tokenizer, data: dict, mode: str):
     """
     Run zero-shot or few-shot classification with the loaded model.
