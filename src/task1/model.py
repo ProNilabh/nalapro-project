@@ -1,13 +1,3 @@
-"""
-src/task1/model.py — Simple two-layer neural network.
-
-Architecture (as required by the task):
-    Input → Linear → ReLU → Dropout → Linear → Logits
-
-Same architecture is reused for Word2Vec, TF-IDF, and combined inputs;
-only the input dimension changes.
-"""
-
 import torch
 import torch.nn as nn
 from torch.utils.data import Dataset
