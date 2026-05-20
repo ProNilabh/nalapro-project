@@ -1,15 +1,3 @@
-"""
-src/task2/train.py — BERT fine-tuning loop.
-
-Reusable building blocks:
-    bert_train_one_epoch()
-    bert_evaluate()
-    finetune_bert()
-
-`finetune_bert()` is called by Task 2 directly (from a pretrained
-bert-base-uncased) and by Task 3 (from a domain-adapted MLM model).
-"""
-
 import os
 
 import torch
@@ -31,11 +19,7 @@ from src.utils.evaluation import (
     plot_training_curves,
 )
 
-
-# -----------------------------------------------------------------
 # epoch helpers
-# -----------------------------------------------------------------
-
 def bert_train_one_epoch(model, loader, optimizer, scheduler, device):
     model.train()
     total_loss, correct, total = 0.0, 0, 0
@@ -76,29 +60,12 @@ def bert_evaluate(model, loader, device):
     return total_loss / total, correct / total, all_preds, all_labels
 
 
-# -----------------------------------------------------------------
 # Full fine-tuning pipeline
 # -----------------------------------------------------------------
 
 def finetune_bert(data: dict, base_model: str, run_name: str,
                   ignore_mismatched_sizes: bool = False):
-    """
-    Fine-tune a BERT-family model with a classification head.
 
-    Parameters
-    ----------
-    data : dict from src.data.load_20newsgroups()
-    base_model : HF model name OR local path
-        For Task 2: "bert-base-uncased"
-        For Task 3: path to MLM-pretrained checkpoint
-    run_name : descriptive name for W&B + saved files
-    ignore_mismatched_sizes : True when loading from an MLM checkpoint
-        (the MLM head is different from the classification head).
-
-    Returns
-    -------
-    dict of test metrics.
-    """
     torch.manual_seed(config.RANDOM_SEED)
     device = torch.device(config.DEVICE)
 
