@@ -1,16 +1,3 @@
-"""
-src/task3/run.py — Entry point for Task 3 (MLM → classification fine-tune).
-
-Two stages:
-    Stage 1: pretrain bert-base-uncased with the MLM objective on the
-             20-Newsgroups corpus (unsupervised)
-    Stage 2: load the domain-adapted weights and fine-tune them for
-             classification, the same way as Task 2
-
-Usage:
-    python -m src.task3.run
-"""
-
 import config
 from src.data import load_20newsgroups
 from src.task3.mlm import pretrain_mlm
