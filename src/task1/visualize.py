@@ -1,15 +1,3 @@
-"""
-src/task1/visualize.py — Word2Vec embedding visualizations (Task 1b).
-
-Trains Word2Vec for several different epoch counts and produces:
-  1. t-SNE 2-D projection at each epoch count
-  2. Cosine-similarity heatmaps for a set of "topic words"
-  3. Vector-drift bar chart (avg cosine distance from the 1-epoch baseline)
-
-These visualizations answer the question: "Did the vectors change in
-the space? What was the effect of training?"
-"""
-
 import os
 
 import numpy as np
@@ -25,8 +13,6 @@ import config
 from src.task1.embeddings import train_word2vec
 
 
-# Topic-related words: if the model is learning meaningful relations,
-# words from the same row should cluster together / have high similarity.
 TOPIC_WORDS = [
     "computer", "software", "windows", "linux", "hardware",
     "god", "church", "religion", "bible", "christian",
@@ -36,7 +22,6 @@ TOPIC_WORDS = [
 
 
 def plot_tsne_grid(models, save_path: str, num_words: int = 150):
-    """t-SNE 2D projection of the most frequent words, one panel per model."""
     epochs_list = sorted(models.keys())
     n = len(epochs_list)
     rows = (n + 1) // 2
@@ -60,7 +45,6 @@ def plot_tsne_grid(models, save_path: str, num_words: int = 150):
         ax.set_title(f"Word2Vec — {ep} epochs", fontweight="bold")
         ax.set_xlabel("t-SNE 1"); ax.set_ylabel("t-SNE 2")
 
-    # Hide unused axes
     for ax in axes[n:]:
         ax.set_visible(False)
 
@@ -73,7 +57,6 @@ def plot_tsne_grid(models, save_path: str, num_words: int = 150):
 
 
 def plot_cosine_heatmaps(models, save_path: str):
-    """Heatmap of cosine similarity among TOPIC_WORDS at each epoch count."""
     epochs_list = sorted(models.keys())
     fig, axes = plt.subplots(1, len(epochs_list),
                              figsize=(6 * len(epochs_list), 5.5))
@@ -101,7 +84,6 @@ def plot_cosine_heatmaps(models, save_path: str):
 
 
 def plot_vector_drift(models, save_path: str, num_words: int = 200):
-    """Average cosine distance from the smallest-epoch model."""
     epochs_list = sorted(models.keys())
     baseline = models[epochs_list[0]]
     base_words = list(baseline.wv.index_to_key[:num_words])
@@ -137,14 +119,6 @@ def plot_vector_drift(models, save_path: str, num_words: int = 200):
 
 
 def run_embedding_visualization(all_tokens):
-    """
-    Top-level: train Word2Vec at several epoch counts and produce all plots.
-
-    Parameters
-    ----------
-    all_tokens : list of list of str
-        All preprocessed (tokenized) documents.
-    """
     models = {}
     for ep in config.W2V_EPOCHS_TO_COMPARE:
         print(f"\n[w2v] training {ep} epochs...")
