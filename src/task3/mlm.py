@@ -1,14 +1,3 @@
-"""
-src/task3/mlm.py — Masked Language Model (MLM) pretraining.
-
-Step 1 of Task 3: continue pretraining bert-base-uncased on the
-20 Newsgroups corpus using the standard MLM objective (mask 15%
-of tokens, predict them). This is unsupervised — labels are not used.
-
-Output: a domain-adapted BERT saved to outputs/models/task3_bert_mlm/
-which will then be loaded by src/task3/finetune.py.
-"""
-
 import os
 
 import torch
@@ -45,13 +34,6 @@ class TextOnlyDataset(Dataset):
 
 
 def pretrain_mlm(data: dict, save_path: str = None) -> str:
-    """
-    Continue pretraining bert-base-uncased with the MLM objective on
-    all 20-Newsgroups texts (train + val + test, with very short docs
-    filtered out).
-
-    Returns the path where the domain-adapted model is saved.
-    """
     torch.manual_seed(config.RANDOM_SEED)
     device = torch.device(config.DEVICE)
     save_path = save_path or os.path.join(config.MODELS_DIR, "task3_bert_mlm")
