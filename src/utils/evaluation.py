@@ -1,13 +1,3 @@
-"""
-src/utils/evaluation.py — Shared evaluation and plotting utilities.
-
-Provides:
-  - compute_metrics(): accuracy, precision, recall, F1
-  - plot_confusion_matrix(): raw + normalized CM heatmaps
-  - plot_training_curves(): loss + accuracy across epochs
-  - plot_comparison_bar(): final cross-model bar chart
-"""
-
 import os
 
 import numpy as np
