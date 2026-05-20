@@ -1,19 +1,3 @@
-"""
-src/task4/run.py — Entry point for Task 4 (Llama-3 zero-shot / few-shot).
-
-Important: this task does NOT fine-tune the LLM. We construct prompts
-and read the LLM's text response, mapping it back to one of the 20
-category names.
-
-Before running, read docs/TASK4_GUIDE.md for:
-  - how to get Hugging Face access to Meta-Llama-3-8B-Instruct
-  - GPU / memory requirements
-  - smaller-model alternatives if your machine cannot run Llama-3-8B
-
-Usage:
-    python -m src.task4.run
-"""
-
 import os
 
 import wandb
