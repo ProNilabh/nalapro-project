@@ -1,9 +1,4 @@
 """
-src/utils/preprocessing.py — Text preprocessing.
-
-Cleans raw newsgroup posts and tokenizes them for use with
-Word2Vec, TF-IDF, and other simple vectorizers.
-
 Steps:
   1. Lowercase
   2. Remove email addresses and URLs
