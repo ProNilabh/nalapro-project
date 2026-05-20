@@ -1,11 +1,3 @@
-"""
-src/task1/train.py — Training and evaluation loop for the simple NN.
-
-Reusable across Task 1b (Word2Vec input), 1c (TF-IDF input), and
-1d (combined input). The NN architecture and hyperparameters stay
-the same; only the input features change.
-"""
-
 import os
 
 import numpy as np
@@ -68,12 +60,7 @@ def _evaluate(model, loader, criterion, device):
 def train_simple_nn(X_train, y_train, X_val, y_val, X_test, y_test,
                     input_dim, num_classes, target_names,
                     run_name: str):
-    """
-    Full train-validate-test pipeline. Logs to W&B and saves the
-    best-validation model checkpoint to outputs/models/.
-
-    Returns a dict of test metrics: {accuracy, precision, recall, f1}.
-    """
+                        
     _seed_all(config.RANDOM_SEED)
     device = torch.device(config.DEVICE)
 
