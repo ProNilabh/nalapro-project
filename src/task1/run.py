@@ -1,16 +1,3 @@
-"""
-src/task1/run.py — Entry point for Task 1 (subtasks a, b, c, d).
-
-Runs:
-  1a. Preprocessing
-  1b. Word2Vec + simple NN (and embedding visualizations)
-  1c. TF-IDF + simple NN (with the same architecture)
-  1d. Extra experiment: concatenate Word2Vec + TF-IDF features
-
-Usage:
-    python -m src.task1.run
-"""
-
 import numpy as np
 
 import config
@@ -25,9 +12,7 @@ from src.task1.visualize import run_embedding_visualization
 
 
 def main():
-    # ============================================================
     # 1a. Load + preprocess
-    # ============================================================
     print("\n" + "=" * 60)
     print("TASK 1a — Loading and preprocessing")
     print("=" * 60)
@@ -46,9 +31,7 @@ def main():
 
     results = {}
 
-    # ============================================================
     # 1b. Word2Vec → simple NN
-    # ============================================================
     print("\n" + "=" * 60)
     print("TASK 1b — Word2Vec + simple NN")
     print("=" * 60)
@@ -69,17 +52,13 @@ def main():
         run_name="task1b_w2v_nn",
     )
 
-    # ============================================================
     # 1b extra: embedding visualizations
-    # ============================================================
     print("\n" + "=" * 60)
     print("TASK 1b extra — Embedding visualizations (1, 5, 20, 50 epochs)")
     print("=" * 60)
     run_embedding_visualization(all_tokens)
 
-    # ============================================================
     # 1c. TF-IDF → simple NN
-    # ============================================================
     print("\n" + "=" * 60)
     print("TASK 1c — TF-IDF + simple NN")
     print("=" * 60)
@@ -99,14 +78,7 @@ def main():
         run_name="task1c_tfidf_nn",
     )
 
-    # ============================================================
     # 1d. Extra experiment — concatenated W2V + TF-IDF
-    # ------------------------------------------------------------
-    # Hypothesis: Word2Vec captures semantic similarity while TF-IDF
-    # captures lexical importance. Concatenating both gives the same
-    # 2-layer NN access to complementary information without changing
-    # the architecture.
-    # ============================================================
     print("\n" + "=" * 60)
     print("TASK 1d — Combined W2V + TF-IDF + simple NN")
     print("=" * 60)
@@ -126,9 +98,7 @@ def main():
         run_name="task1d_combined_nn",
     )
 
-    # ============================================================
     # Summary
-    # ============================================================
     print("\n" + "=" * 60)
     print("TASK 1 — Summary")
     print("=" * 60)
