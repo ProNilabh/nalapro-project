@@ -1,11 +1,3 @@
-"""
-src/task3/finetune.py — Classification fine-tuning AFTER MLM pretraining.
-
-Reuses src.task2.train.finetune_bert() but points the base_model
-argument at the local MLM-pretrained checkpoint instead of the
-official bert-base-uncased.
-"""
-
 from src.task2.train import finetune_bert
 
 
