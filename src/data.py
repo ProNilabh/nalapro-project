@@ -1,10 +1,7 @@
 """
-src/data.py — 20 Newsgroups dataset loader.
 
-Wraps sklearn.datasets.fetch_20newsgroups and produces a clean
-train/val/test split. The dataset is downloaded once and cached
-by scikit-learn at ~/scikit_learn_data/ — it is NOT stored in
-the project repository.
+20 Newsgroups dataset loader.
+
 """
 
 from sklearn.datasets import fetch_20newsgroups
@@ -14,13 +11,6 @@ import config
 
 
 def load_20newsgroups():
-    """
-    Returns
-    -------
-    dict with keys:
-        train_texts, train_labels, val_texts, val_labels,
-        test_texts, test_labels, target_names, num_classes
-    """
     # Headers, footers, and quotes are removed to prevent data leakage —
     # e.g. some categories are trivially identifiable by their email
     # headers, which would let any model "cheat".
