@@ -1,4 +1,4 @@
-# 20 Newsgroups Text Classification — NALAPRO Project
+# 20 Newsgroups Text Classification - NALAPRO Project
 
 Nilabh PANDEY for HSLU
 
