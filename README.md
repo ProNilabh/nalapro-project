@@ -123,6 +123,12 @@ Set these as environment variables (`HF_TOKEN`, `WANDB_API_KEY`) — **do not co
 All runs — hyperparameters, training curves, and final metrics — are logged to Weights & Biases for full reproducibility.
 
 ---
+ 
+## 🤖 AI Usage Declaration
+ 
+Generative AI tools were used as coding and writing aids during this project for debugging and refining text. All experimental design, model training, and reported results are the authors' own work; every metric in this README is produced by the project's own code and logged to Weights & Biases for verification.
+
+---
 
 ## 👥 Authors
 
