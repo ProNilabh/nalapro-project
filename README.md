@@ -120,10 +120,10 @@ Set these as environment variables (`HF_TOKEN`, `WANDB_API_KEY`) — **do not co
 
 ## 📈 Experiment tracking
 
-All runs — hyper-parameters, training curves, and final metrics — are logged to Weights & Biases for full reproducibility.
+All runs — hyperparameters, training curves, and final metrics — are logged to Weights & Biases for full reproducibility.
 
 ---
 
 ## 👥 Authors
 
-Aditya · Nilabh Pandey — HSLU, NALAPRO course.
+Nilabh Pandey — HSLU, NALAPRO course.
