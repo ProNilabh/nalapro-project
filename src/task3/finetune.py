@@ -1,8 +1,6 @@
 from src.task2.train import finetune_bert
 
-
 def finetune_after_mlm(data: dict, mlm_checkpoint: str):
-    """Run the same fine-tuning pipeline as Task 2 but on the MLM model."""
     return finetune_bert(
         data,
         base_model=mlm_checkpoint,
