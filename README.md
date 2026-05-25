@@ -1,6 +1,6 @@
 # 20 Newsgroups Text Classification (NALAPRO Project)
 
-Nilabh Pandey — HSLU, NALAPRO course.
+Nilabh Pandey - HSLU, NALAPRO course.
 
 - **Code (GitHub):** https://github.com/ProNilabh/nalapro-project
 - **Experiments (Weights & Biases):** https://wandb.ai/nilabhpandey7-hslu/nalapro-project
