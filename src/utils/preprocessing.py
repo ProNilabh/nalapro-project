@@ -16,7 +16,6 @@ from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 from nltk.stem import WordNetLemmatizer
 
-# Download required NLTK resources (only first time)
 for resource in ("punkt", "punkt_tab", "stopwords", "wordnet"):
     try:
         nltk.download(resource, quiet=True)
