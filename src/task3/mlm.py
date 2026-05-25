@@ -13,9 +13,7 @@ import wandb
 
 import config
 
-
 class TextOnlyDataset(Dataset):
-    """Tokenize once up-front; collator handles masking dynamically."""
 
     def __init__(self, texts, tokenizer, max_length: int):
         self.enc = tokenizer(
@@ -38,16 +36,13 @@ def pretrain_mlm(data: dict, save_path: str = None) -> str:
     device = torch.device(config.DEVICE)
     save_path = save_path or os.path.join(config.MODELS_DIR, "task3_bert_mlm")
 
-    # Use all texts (this is unsupervised, so test labels are irrelevant)
     texts = data["train_texts"] + data["val_texts"] + data["test_texts"]
     texts = [t for t in texts if len(t.strip()) > 50]
     print(f"  MLM pretraining on {len(texts)} documents")
 
-    # Tokenizer + base model
     tokenizer = AutoTokenizer.from_pretrained(config.BERT_MODEL)
     model = AutoModelForMaskedLM.from_pretrained(config.BERT_MODEL).to(device)
 
-    # Dataset + masking collator
     dataset = TextOnlyDataset(texts, tokenizer, config.BERT_MAX_LEN)
     collator = DataCollatorForLanguageModeling(
         tokenizer=tokenizer,
@@ -96,7 +91,6 @@ def pretrain_mlm(data: dict, save_path: str = None) -> str:
         print(f"  epoch {epoch}: MLM loss = {avg:.4f}   perplexity = {ppl:.2f}")
         wandb.log({"epoch": epoch, "mlm_loss": avg, "perplexity": ppl})
 
-    # Save model + tokenizer in the same directory
     model.save_pretrained(save_path)
     tokenizer.save_pretrained(save_path)
     print(f"  domain-adapted BERT saved to: {save_path}")
