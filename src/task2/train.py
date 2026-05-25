@@ -19,7 +19,6 @@ from src.utils.evaluation import (
     plot_training_curves,
 )
 
-# epoch helpers
 def bert_train_one_epoch(model, loader, optimizer, scheduler, device):
     model.train()
     total_loss, correct, total = 0.0, 0, 0
@@ -40,7 +39,6 @@ def bert_train_one_epoch(model, loader, optimizer, scheduler, device):
         total += labels.size(0)
     return total_loss / total, correct / total
 
-
 def bert_evaluate(model, loader, device):
     model.eval()
     total_loss, correct, total = 0.0, 0, 0
@@ -59,17 +57,12 @@ def bert_evaluate(model, loader, device):
             all_labels.extend(labels.cpu().numpy())
     return total_loss / total, correct / total, all_preds, all_labels
 
-
-# Full fine-tuning pipeline
-# -----------------------------------------------------------------
-
 def finetune_bert(data: dict, base_model: str, run_name: str,
                   ignore_mismatched_sizes: bool = False):
 
     torch.manual_seed(config.RANDOM_SEED)
     device = torch.device(config.DEVICE)
 
-    # Tokenizer + model
     tokenizer = get_tokenizer(base_model)
     model = AutoModelForSequenceClassification.from_pretrained(
         base_model,
@@ -77,7 +70,6 @@ def finetune_bert(data: dict, base_model: str, run_name: str,
         ignore_mismatched_sizes=ignore_mismatched_sizes,
     ).to(device)
 
-    # Datasets
     train_ds = BertClassificationDataset(
         data["train_texts"], data["train_labels"], tokenizer, config.BERT_MAX_LEN
     )
@@ -92,7 +84,6 @@ def finetune_bert(data: dict, base_model: str, run_name: str,
     val_loader = DataLoader(val_ds, batch_size=config.BERT_BATCH_SIZE)
     test_loader = DataLoader(test_ds, batch_size=config.BERT_BATCH_SIZE)
 
-    # Optimizer + linear-warmup scheduler
     optimizer = torch.optim.AdamW(
         model.parameters(), lr=config.BERT_LR, weight_decay=0.01
     )
@@ -120,7 +111,6 @@ def finetune_bert(data: dict, base_model: str, run_name: str,
         reinit=True,
     )
 
-    # Training loop with checkpointing
     tls, vls, tas, vas = [], [], [], []
     best_val_acc = 0.0
     best_dir = os.path.join(config.MODELS_DIR, f"{run_name}_best")
@@ -138,14 +128,12 @@ def finetune_bert(data: dict, base_model: str, run_name: str,
             model.save_pretrained(best_dir)
             tokenizer.save_pretrained(best_dir)
 
-    # Plots
     plot_training_curves(
         tls, vls, tas, vas,
         title=run_name,
         save_path=os.path.join(config.PLOTS_DIR, f"{run_name}_curves.png"),
     )
 
-    # Final test using best checkpoint
     print("\n[test] loading best checkpoint and evaluating...")
     model = AutoModelForSequenceClassification.from_pretrained(best_dir).to(device)
     _, _, preds, labels = bert_evaluate(model, test_loader, device)
