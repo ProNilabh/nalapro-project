@@ -8,9 +8,6 @@ from transformers import AutoTokenizer, AutoModelForCausalLM
 
 import config
 
-
-# Model loading (supports optional 4-bit quantization)
-
 def load_llama():
     print(f"  loading {config.LLAMA_MODEL}...")
 
@@ -40,9 +37,6 @@ def load_llama():
     model = AutoModelForCausalLM.from_pretrained(config.LLAMA_MODEL, **model_kwargs)
     model.eval()
     return model, tokenizer
-
-
-# Prompt construction
 
 def _category_list(target_names) -> str:
     return "\n".join(f"  - {name}" for name in target_names)
@@ -77,9 +71,6 @@ def few_shot_prompt(text: str, target_names, examples) -> str:
         "Category:"
     )
 
-
-# Response parsing
-
 def parse_response(response: str, target_names) -> int:
     """
     Map the model's free-text answer back to a category index.
@@ -88,21 +79,18 @@ def parse_response(response: str, target_names) -> int:
     """
     r = response.strip().lower()
 
-    # Pass 1: full category name appears in the response
     for i, name in enumerate(target_names):
         if name.lower() in r:
             return i
 
-    # Pass 2: a distinctive sub-token of the category name appears
     for i, name in enumerate(target_names):
         parts = name.lower().replace(".", " ").replace("-", " ").split()
         if any(len(p) > 3 and p in r for p in parts):
             return i
 
-    return -1   # unparseable
+    return -1  
 
 
-# Few-shot example selection
 def pick_few_shot_examples(train_texts, train_labels, target_names, k: int):
     """
     Pick `k` (text, label_name) examples for in-context learning.
@@ -116,8 +104,6 @@ def pick_few_shot_examples(train_texts, train_labels, target_names, k: int):
     random.shuffle(examples)
     return examples[:k]
 
-
-# Experiment runner
 def run_llama_experiment(model, tokenizer, data: dict, mode: str):
     """
     Run zero-shot or few-shot classification with the loaded model.
@@ -138,7 +124,6 @@ def run_llama_experiment(model, tokenizer, data: dict, mode: str):
     test_labels = data["test_labels"]
     target_names = data["target_names"]
 
-    # Sample a manageable subset (LLM inference is slow)
     n = min(config.LLAMA_EVAL_SAMPLES, len(test_texts))
     indices = random.sample(range(len(test_texts)), n)
 
@@ -169,11 +154,10 @@ def run_llama_experiment(model, tokenizer, data: dict, mode: str):
                 **inputs,
                 max_new_tokens=config.LLAMA_MAX_NEW_TOKENS,
                 temperature=config.LLAMA_TEMPERATURE,
-                do_sample=False,           # deterministic
+                do_sample=False,           
                 pad_token_id=tokenizer.eos_token_id,
             )
 
-        # Decode ONLY the newly generated tokens
         response = tokenizer.decode(
             output[0][inputs["input_ids"].shape[1]:],
             skip_special_tokens=True,
@@ -182,7 +166,7 @@ def run_llama_experiment(model, tokenizer, data: dict, mode: str):
         pred = parse_response(response, target_names)
         if pred == -1:
             unparseable += 1
-            pred = 0   # fallback so metrics can still be computed
+            pred = 0   
         preds.append(pred)
         labels.append(true_label)
 
