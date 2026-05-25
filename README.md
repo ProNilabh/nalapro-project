@@ -6,7 +6,7 @@ Nilabh Pandey - HSLU, NALAPRO course.
 - **Experiments (Weights & Biases):** https://wandb.ai/nilabhpandey7-hslu/nalapro-project
 - **Report:** [`docs/report.pdf`](docs/report.pdf)
 
-This project takes one text-classification task — sorting 20 Newsgroups posts into their topic — and solves it with four different families of methods, so I can see how much each step actually adds. The progression goes from classical word features (Word2Vec and TF-IDF) to a fine-tuned BERT, then a domain-adapted BERT, then a Llama-3 model used by prompting, and finally a cheaply fine-tuned Llama-3 using QLoRA as a bonus.
+This project takes one text-classification task, sorting 20 Newsgroups posts into their topic, and solves it with four different families of methods, so I can see how much each step actually adds. The progression goes from classical word features (Word2Vec and TF-IDF) to a fine-tuned BERT, then a domain-adapted BERT, then a Llama-3 model used by prompting, and finally a cheaply fine-tuned Llama-3 using QLoRA as a bonus.
 
 ## The task
 
@@ -81,7 +81,7 @@ pip install -r requirements.txt
 pip install "bitsandbytes>=0.43.0" "accelerate>=0.30.0" peft
 ```
 
-Hyper-parameters (batch size, epochs, max sequence length, and so on) live in `config.py`. Each task runs as a module:
+Hyperparameters (batch size, epochs, max sequence length, and so on) live in `config.py`. Each task runs as a module:
 
 ```bash
 python -m src.task1.run     # classical features + NN
