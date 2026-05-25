@@ -7,7 +7,6 @@ from src.data import load_20newsgroups
 from src.task4.llama import load_llama, run_llama_experiment
 from src.utils.evaluation import compute_metrics, plot_confusion_matrix
 
-
 def main():
     print("\n" + "=" * 60)
     print(f"TASK 4 — Llama-3 zero-shot / few-shot ({config.LLAMA_MODEL})")
@@ -30,8 +29,8 @@ def main():
         },
         reinit=True,
     )
-
-    # -------- Zero-shot --------
+    
+    #zero shot
     print("\n[zero-shot]")
     preds, labels = run_llama_experiment(model, tokenizer, data, mode="zero_shot")
     zs = compute_metrics(labels, preds, target_names=data["target_names"])
@@ -42,7 +41,7 @@ def main():
     )
     wandb.log({"zs_accuracy": zs["accuracy"], "zs_f1": zs["f1"]})
 
-    # -------- Few-shot --------
+    #few shot
     print(f"\n[few-shot, k={config.LLAMA_NUM_FEW_SHOT}]")
     preds, labels = run_llama_experiment(model, tokenizer, data, mode="few_shot")
     fs = compute_metrics(labels, preds, target_names=data["target_names"])
@@ -62,7 +61,6 @@ def main():
     print(f"Few-shot  — accuracy {fs['accuracy']:.4f}  F1 {fs['f1']:.4f}")
 
     return {"zero_shot": zs, "few_shot": fs}
-
 
 if __name__ == "__main__":
     main()
