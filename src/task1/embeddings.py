@@ -19,7 +19,7 @@ def train_word2vec(tokenized_docs, epochs: int = None,
         window=config.W2V_WINDOW,
         min_count=config.W2V_MIN_COUNT,
         workers=config.W2V_WORKERS,
-        sg=1,                       # 1 = Skip-Gram, 0 = CBOW
+        sg=1,                       
         epochs=epochs,
         seed=config.RANDOM_SEED,
     )
@@ -50,9 +50,9 @@ def fit_tfidf(train_strings, max_features: int = None) -> TfidfVectorizer:
     max_features = max_features or config.TFIDF_MAX_FEATURES
     vec = TfidfVectorizer(
         max_features=max_features,
-        sublinear_tf=True,    # log scaling of TF
-        min_df=2,             # ignore very rare terms
-        max_df=0.95,          # ignore terms in > 95% of docs
+        sublinear_tf=True,    
+        min_df=2,             
+        max_df=0.95,          
         norm="l2",
     )
     vec.fit(train_strings)
