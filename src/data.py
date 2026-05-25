@@ -1,9 +1,3 @@
-"""
-
-20 Newsgroups dataset loader.
-
-"""
-
 from sklearn.datasets import fetch_20newsgroups
 from sklearn.model_selection import train_test_split
 
@@ -11,9 +5,6 @@ import config
 
 
 def load_20newsgroups():
-    # Headers, footers, and quotes are removed to prevent data leakage —
-    # e.g. some categories are trivially identifiable by their email
-    # headers, which would let any model "cheat".
     train_raw = fetch_20newsgroups(
         subset="train",
         categories=config.CATEGORIES,
@@ -29,7 +20,6 @@ def load_20newsgroups():
         random_state=config.RANDOM_SEED,
     )
 
-    # Stratified split into train and validation
     train_texts, val_texts, train_labels, val_labels = train_test_split(
         train_raw.data,
         train_raw.target.tolist(),
@@ -57,8 +47,6 @@ def load_20newsgroups():
         f"classes={data['num_classes']}"
     )
     return data
-
-
 if __name__ == "__main__":
     d = load_20newsgroups()
     print(f"\nSample document (truncated):\n{d['train_texts'][0][:200]}")
